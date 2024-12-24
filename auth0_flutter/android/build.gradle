@@ -1,0 +1,84 @@
+buildscript {
+    ext.kotlin_version = '1.9.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id("org.jetbrains.kotlinx.kover") version "0.7.4"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def libApplicationId = 'com.auth0.auth0_flutter'
+
+group libApplicationId
+version '1.0-SNAPSHOT'
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+android {
+    compileSdkVersion 31
+    if (project.android.hasProperty("namespace")) {
+        namespace libApplicationId
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [auth0Domain: "test-domain", auth0Scheme: "test"]
+    }
+
+    buildTypes {
+       debug {
+           testCoverageEnabled true
+       }
+   }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //noinspection GradleDynamicVersion
+    implementation 'com.auth0.android:auth0:2.10.2'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    testImplementation 'com.jayway.awaitility:awaitility:1.7.0'
+    testImplementation 'org.robolectric:robolectric:4.6.1'
+    testImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+    testImplementation 'com.auth0:java-jwt:3.19.1'
+}

@@ -1,0 +1,28 @@
+{
+  "packageLabel": "af",
+  "files": {
+    "lib/src/version.dart": [],
+    "pubspec.yaml": [
+      "version: {MAJOR}.{MINOR}.{PATCH}"
+    ],
+    "darwin/auth0_flutter.podspec": [
+      "= '{MAJOR}.{MINOR}.{PATCH}'"
+    ],
+    "ios/auth0_flutter.podspec": [
+      "= '{MAJOR}.{MINOR}.{PATCH}'"
+    ],
+    "macos/auth0_flutter.podspec": [
+      "= '{MAJOR}.{MINOR}.{PATCH}'"
+    ]
+  },
+  "prebump": "flutter analyze && dart pub upgrade auth0_flutter_platform_interface --tighten",
+  "prFilters": [
+    {
+      "type": "title",
+      "args": [
+        "^afpi:"
+      ],
+      "invert": true
+    }
+  ]
+}

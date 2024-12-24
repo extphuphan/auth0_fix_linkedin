@@ -1,0 +1,18 @@
+{
+  "packageLabel": "afpi",
+  "files": {
+    "pubspec.yaml": [
+      "version: {MAJOR}.{MINOR}.{PATCH}"
+    ]
+  },
+  "prebump": "flutter analyze",
+  "prFilters": [
+    {
+      "type": "title",
+      "args": [
+        "^af:"
+      ],
+      "invert": true
+    }
+  ]
+}
